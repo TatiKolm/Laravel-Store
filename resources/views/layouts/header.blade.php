@@ -8,27 +8,44 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Home</a>
+                <a class="nav-link" aria-current="page" href="#">{{ __("app.menu.home")}}</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Консоль
+                {{ __("app.menu.dashboard")}}
                 </a>
                 <ul class="dropdown-menu">
                   <li>
                     <a class="dropdown-item" href="{{route('categories.list')}}">
-                        Категории
+                    {{ __("app.menu.categories")}}
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{route('articles.index')}}">
-                        Новости
+                    {{ __("app.menu.news")}}
                     </a>
                 </li>
                 </ul>
               </li>
             </ul>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end" style="margin-right:0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center justify-content-end" style="margin-right:0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{__("Lang")}}
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="{{route('app.change-lang', 'en')}}">
+                    {{__("English")}}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{route('app.change-lang', 'ru')}}">
+                    {{__("Russian")}}
+                    </a>
+                </li>
+                </ul>
+              </li>
                     @if (auth()->user())
                         <li class="nav-item text-light mx-3">
                             {{ auth()->user()->name }}
@@ -37,15 +54,15 @@
 
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-danger">Выйти</button>
+                                <button type="submit" class="btn btn-sm btn-danger">{{ __("app.menu.logout")}}</button>
                             </form>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('auth.register') }}">Регистрация</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('auth.register') }}">{{__("Register")}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('auth.login-page') }}">Вход</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('auth.login-page') }}">{{__("LogIn")}}</a>
                         </li>
                     @endif
                 </ul>

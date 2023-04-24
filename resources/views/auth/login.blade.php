@@ -3,7 +3,7 @@
 @section('title', 'Вход в аккаунт')
 @section('content')
     <div class="d-flex justify-content-between align-items-center my-5">
-        <h2>Вход в аккаунт</h2>
+        <h2>{{__("Log in")}}</h2>
     </div>
 
     @if (session('success_register'))
@@ -17,20 +17,20 @@
             @csrf
 
             <div class="form-group mb-3">
-                <label for="email" class="form-label">Ваш email</label>
+                <label for="email" class="form-label">{{__("Email")}}</label>
                 <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}">
                 @error('email')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
             <div class="form-group mb-3">
-                <label for="password" class="form-label">Пароль</label>
+                <label for="password" class="form-label">{{__("Password")}}</label>
                 <input type="password" id="password" name="password" class="form-control">
                 @error('password')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Войти</button>
+            <button type="submit" class="btn btn-primary">{{__("LogIn")}}</button>
         </form>
     </div>
 @endsection

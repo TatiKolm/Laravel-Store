@@ -3,8 +3,8 @@
 @section('title', 'Новости')
 @section('content')
     <div class="d-flex justify-content-between align-items-center my-5">
-        <h2>Новости</h2>
-        <a href="{{ route('articles.create') }}" class="btn btn-primary">Добавить</a>
+        <h2>{{__("News")}}</h2>
+        <a href="{{ route('articles.create') }}" class="btn btn-primary">{{__("Add")}}</a>
     </div>
 
     @if (session('success'))
@@ -18,11 +18,11 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Изображение</th>
-                        <th>Заголовок</th>
-                        <th>Категория</th>
-                        <th>Опубликовано</th>
-                        <th>Действия</th>
+                        <th>{{__("Image")}}</th>
+                        <th>{{__("Title")}}</th>
+                        <th>{{__("Category")}}</th>
+                        <th>{{__("Is_published")}}</th>
+                        <th>{{__("Actions")}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,13 +40,13 @@
                             <td>{{ $article->getPublishStatus() }}</td>
                             <td class="d-flex">
                                 <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-warning">
-                                    Ред.
+                                {{__("Edit")}}
                                 </a>
                                 <form action="{{ route('articles.delete', $article) }}" method="POST" class="mx-3">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"
                                         onclick='event.preventDefault();if(confirm("Запись будет удалена. Продолжить?")){this.closest("form").submit();}'>
-                                        Удалить
+                                        {{__("Delete")}}
                                     </button>
                                 </form>
                             </td>
@@ -55,7 +55,7 @@
                 </tbody>
             </table>
         @else
-            <p class="my-4">Нет ни одной новости.</p>
+            <p class="my-4">{{__("app.page.empty-news")}}</p>
         @endif
     </div>
 @endsection

@@ -3,7 +3,7 @@
 @section("title", "Главная")
 
 @section("content")
-    <h1 class="my-5">Новости</h1>
+    <h1 class="my-5">{{__("News")}}</h1>
     
     <div class="row">
         <div class="col-sm-12 d-flex ">

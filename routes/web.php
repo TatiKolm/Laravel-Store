@@ -5,6 +5,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TrademarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,10 @@ use App\Http\Controllers\AuthController;
 // });
 
 // Route::get('/', [AppController::class,"mainPage"])->name("app.main");
-Route::get('/', [ArticleController::class,"main"])->name("app.main");
+
+Route::middleware("locale")->group(function (){
+    Route::get('/', [ArticleController::class,"main"])->name("app.main");
+    Route::get('lang/{lang}', [AppController::class, "changeLocale"])->name("app.change-lang");
 
 Route::middleware(['auth'])->group(function(){
 
@@ -49,6 +53,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('{articleId}/remove-image', [ArticleController::class, 'removeImage'])->name("articles.remove-image");
         });
 
+        Route::resource('trademarks', TrademarkController::class);
+
     });
 
     Route::post('logout', [AuthController::class, 'logout'])->name("auth.logout");
@@ -63,4 +69,6 @@ Route::middleware(['guest'])->group(function ()
     Route::post('login', [AuthController::class, 'login'])->name("auth.login");
     
 });
+});
+
 

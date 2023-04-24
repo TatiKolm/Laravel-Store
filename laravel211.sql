@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 19 2023 г., 22:17
+-- Время создания: Апр 24 2023 г., 06:09
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -112,7 +112,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2023_04_12_031857_create_categories_table', 1),
 (6, '2023_04_12_032413_create_articales_table', 1),
 (7, '2023_04_16_082555_add_slug_to_articles_table', 2),
-(8, '2023_04_19_170850_add_is_admin_to_users_table', 3);
+(8, '2023_04_19_170850_add_is_admin_to_users_table', 3),
+(9, '2023_04_23_163009_create_books_table', 4),
+(10, '2023_04_23_164854_create_products_table', 5),
+(11, '2023_04_23_170921_create_trademarks_table', 6),
+(12, '2023_04_23_171311_create_producucing_countries_table', 6),
+(13, '2023_04_23_172536_create_product_trademark_table', 6);
 
 -- --------------------------------------------------------
 
@@ -141,6 +146,61 @@ CREATE TABLE `personal_access_tokens` (
   `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `product_trademark`
+--
+
+CREATE TABLE `product_trademark` (
+  `product_id` bigint UNSIGNED NOT NULL,
+  `trademark_id` bigint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `producucing_countries`
+--
+
+CREATE TABLE `producucing_countries` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `trademarks`
+--
+
+CREATE TABLE `trademarks` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -217,6 +277,34 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Индексы таблицы `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `books_slug_unique` (`slug`);
+
+--
+-- Индексы таблицы `product_trademark`
+--
+ALTER TABLE `product_trademark`
+  ADD KEY `product_trademark_product_id_foreign` (`product_id`),
+  ADD KEY `product_trademark_trademark_id_foreign` (`trademark_id`);
+
+--
+-- Индексы таблицы `producucing_countries`
+--
+ALTER TABLE `producucing_countries`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `producucing_countries_slug_unique` (`slug`);
+
+--
+-- Индексы таблицы `trademarks`
+--
+ALTER TABLE `trademarks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `trademarks_slug_unique` (`slug`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -249,12 +337,30 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `producucing_countries`
+--
+ALTER TABLE `producucing_countries`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `trademarks`
+--
+ALTER TABLE `trademarks`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -272,6 +378,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `articles`
   ADD CONSTRAINT `articles_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `product_trademark`
+--
+ALTER TABLE `product_trademark`
+  ADD CONSTRAINT `product_trademark_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_trademark_trademark_id_foreign` FOREIGN KEY (`trademark_id`) REFERENCES `trademarks` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

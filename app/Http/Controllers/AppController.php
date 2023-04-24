@@ -10,4 +10,10 @@ class AppController extends Controller
     {
         return view("main");
     }
+
+    public function changeLocale(Request $request, $lang)
+    {
+        $request->session()->put('lang', $request->lang);
+        return back();
+    }
 }
