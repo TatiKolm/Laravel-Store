@@ -3,6 +3,7 @@
     "Categories": "Категории",
     "Lang": "Язык",
     "Add": "Добавить",
+    "Save": "Сохранить",
     "Category": "Категория",
     "Actions": "Действия",
     "Edit": "Ред.",
@@ -18,5 +19,10 @@
     "Log in": "Вход в аккаунт",
     "LogIn": "Войти",
     "Russian": "Русский",
-    "English": "Английский"
+    "English": "Английский",
+    "Trademarks": "Торговые марки",
+    "Trademark": "Торговая марка",
+    "Products": "Товары",
+    "Create Trademarks": "Новая торговая марка",
+    "Create Product": "Новый товар"
 }

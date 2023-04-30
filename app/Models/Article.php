@@ -80,4 +80,10 @@ class Article extends Model
         }
     }
 
+    public function remove()
+    {
+        $this->removeImage();
+        $this->delete();
+    }
+
 }

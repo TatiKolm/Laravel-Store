@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Trademark;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('layouts.header', function($view){
+            $view->with([
+                'trademarks' => Trademark::all()->sortBy('name')
+            ]);
+        });
     }
 }

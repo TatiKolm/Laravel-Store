@@ -10,7 +10,30 @@
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="#">{{ __("app.menu.home")}}</a>
               </li>
+             
+
               <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ __('Trademarks') }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach ($trademarks as $trademark)
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        {{ $trademark->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                
+                </ul>
+              </li>
+
+            </ul>
+            <ul class="navbar-nav d-flex align-items-center justify-content-end" style="margin-right:0">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ __("app.menu.dashboard")}}
                 </a>
@@ -25,10 +48,18 @@
                     {{ __("app.menu.news")}}
                     </a>
                 </li>
+                <li>
+                    <a class="dropdown-item" href="{{route('products.index')}}">
+                    {{ __("Products")}}
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{{route('trademarks.index')}}">
+                    {{ __("Trademarks")}}
+                    </a>
+                  </li>
                 </ul>
               </li>
-            </ul>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center justify-content-end" style="margin-right:0">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{__("Lang")}}

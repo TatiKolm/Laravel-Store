@@ -5,7 +5,9 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TrademarkController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,17 @@ Route::middleware(['auth'])->group(function(){
         });
 
         Route::resource('trademarks', TrademarkController::class);
+
+        Route::prefix('products')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name("products.index");
+            Route::get('create', [ProductController::class, 'create'])->name("products.create");
+            Route::post('create', [ProductController::class, 'store'])->name("products.store");
+            Route::get('{product}/edit', [ProductController::class, 'edit'])->name("products.edit");
+            Route::put('{product}/edit', [ProductController::class, 'update'])->name("products.update");
+            Route::delete('{product}', [ProductController::class, 'destroy'])->name("products.destroy");
+            Route::get('{productSlug}', [ProductController::class, 'show'])->name("products.show");
+            
+        });
 
     });
 

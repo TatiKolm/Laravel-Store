@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trademark;
 use Illuminate\Http\Request;
 
 class TrademarkController extends Controller
@@ -11,7 +12,9 @@ class TrademarkController extends Controller
      */
     public function index()
     {
-        //
+        return view("trademarks.index", [
+            'trademarks' => Trademark::all() ->sortBy('name')
+        ]);
     }
 
     /**
@@ -19,7 +22,7 @@ class TrademarkController extends Controller
      */
     public function create()
     {
-        //
+        return view('trademarks.create');
     }
 
     /**
@@ -27,7 +30,13 @@ class TrademarkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        Trademark::create($request->all());
+
+        return redirect()->route('trademarks.index');
     }
 
     /**
@@ -41,24 +50,31 @@ class TrademarkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($trademarkId)
     {
-        //
+        $trademark = Trademark::find($trademarkId);
+        return view('trademarks.edit', [
+            'trademark' => $trademark
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Trademark $trademark)
     {
-        //
+        
+        $trademark->update($request->all()); 
+
+        return redirect()->route("trademarks.index");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Trademark $trademark)
     {
-        //
+        $trademark -> delete();
+        return back();
     }
 }

@@ -65,7 +65,7 @@ class ArticleController extends Controller
 
     public function delete($articleId)
     {
-        Article::find($articleId)->delete();
+        Article::find($articleId)->remove();
         return back();
     }
 
