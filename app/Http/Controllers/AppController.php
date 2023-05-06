@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Trademark;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class AppController extends Controller
     public function mainPage()
     {
         return view("main", [
-            'trademarks' => Trademark::all()->sortBy('name')
+            'products' => Product::paginate(8)
         ]);
     }
 

@@ -83,10 +83,10 @@ class ArticleController extends Controller
         
     }
 
-    public function main()
-    {
-        return view('main', [
-            'articles' => Article::all()
-        ]);
-    }
+    // public function main()
+    // {
+    //     return view('main', [
+    //         'articles' => Article::all()
+    //     ]);
+    // }
 }

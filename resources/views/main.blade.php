@@ -3,25 +3,35 @@
 @section("title", "Главная")
 
 @section("content")
-    <h1 class="my-5">{{__("News")}}</h1>
+    <h1 class="my-5">{{__("Products")}}</h1>
     
     <div class="row">
-        <div class="col-sm-12 d-flex ">
-        @if ($articles->count())
-    
-    @foreach ($articles as $article)
-    <div class="card mx-3" style="width: 18rem;">
-            <img src="{{ $article->getImage() }}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{ $article->title }}</h5>
-                <p class="card-text">{{ $article->content }}</p>
-                <a href="#" class="btn btn-primary">Узнать больше</a>
-            </div>
-        </div>     
-         @endforeach
-    @else
-        <p class="my-4">Нет ни одной новости.</p>
-    @endif
+        @foreach ($products as $product)
+        <div class="col-lg-3 col-md-4 col-6">
+            <div class="card mb-3">
+                <img src="{{ $product->getImage() }}" alt="" style="height:200px" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $product->title }}</h5>
+                    <p class="card-text">5 000 руб</p>
+                    <a href="#" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>    
+        </div>
+        @endforeach
+    </div>
+
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group me-2" role="group" aria-label="First group">
+            @if($products->currentPage() != 1)
+            <a href="{{ $products->previousPageUrl() }}" type="button" class="btn btn-primary "><</a>
+            @endif
+            @for($i=1; $i<=$products->lastPage(); $i++)
+            <a href="{{ $products->url($i) }}"type="button" class="btn @if($i==$products->currentPage()) btn-primary @else btn-outline-primary @endif">{{$i}}</a>
+            @endfor
+            @if($products->currentPage() != $products->lastPage())
+            <a href="{{ $products->nextPageUrl() }}" type="button" class="btn btn-primary">></a>
+            @endif
         </div>
     </div>
+    
 @endsection

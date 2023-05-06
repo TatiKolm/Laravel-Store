@@ -33,33 +33,64 @@
 
             </ul>
             <ul class="navbar-nav d-flex align-items-center justify-content-end" style="margin-right:0">
+            @unlessrole('user')
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ __("app.menu.dashboard")}}
                 </a>
                 <ul class="dropdown-menu">
+                  @hasanyrole('super-admin|admin|moderator')
                   <li>
                     <a class="dropdown-item" href="{{route('categories.list')}}">
                     {{ __("app.menu.categories")}}
                     </a>
-                </li>
+                  </li>
+                  @endhasanyrole
+                  @hasanyrole('super-admin|admin|moderator')
                 <li>
                     <a class="dropdown-item" href="{{route('articles.index')}}">
                     {{ __("app.menu.news")}}
                     </a>
                 </li>
+                @endhasanyrole
+                @hasanyrole('super-admin|admin|moderator')
                 <li>
                     <a class="dropdown-item" href="{{route('products.index')}}">
                     {{ __("Products")}}
                     </a>
                   </li>
+                  @endhasanyrole
+                  @hasanyrole('super-admin|admin|moderator')
                   <li>
                     <a class="dropdown-item" href="{{route('trademarks.index')}}">
                     {{ __("Trademarks")}}
                     </a>
                   </li>
+                  @endhasanyrole
+                  @hasanyrole('super-admin|admin')
+                  <li>
+                    <a class="dropdown-item" href="{{route('users.index')}}">
+                    {{ __("Users")}}
+                    </a>
+                  </li>
+                  @endhasanyrole
+                  @hasrole('super-admin')
+                  <li>
+                    <a class="dropdown-item" href="{{route('roles.index')}}">
+                    {{ __("Roles")}}
+                    </a>
+                  </li>
+                  @endhasrole
+                  @hasrole('super-admin')
+                  <li>
+                    <a class="dropdown-item" href="{{route('permissions.index')}}">
+                    {{ __("Permissions")}}
+                    </a>
+                  </li>
+                  @endhasrole
                 </ul>
               </li>
+              @endunlessrole
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{__("Lang")}}

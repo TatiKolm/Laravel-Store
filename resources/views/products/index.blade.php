@@ -38,7 +38,8 @@
                             </a>
                             <form action="{{ route('products.destroy', $product) }}" method="POST" class="mx-3">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="event.preventDefault(); if(confirm('Запись будет удалена. Продолжить?')){this.closest('form').submit();}">
                                 {{__("Delete")}}
                                 </button>
                             </form>

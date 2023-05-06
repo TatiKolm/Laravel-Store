@@ -24,5 +24,8 @@
     "Trademark": "Торговая марка",
     "Products": "Товары",
     "Create Trademarks": "Новая торговая марка",
-    "Create Product": "Новый товар"
+    "Create Product": "Новый товар",
+    "Users": "Пользователи",
+    "Roles": "Роли",
+    "Permissions": "Права"
 }

@@ -5,9 +5,12 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TrademarkController;
-use App\Models\Product;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +30,10 @@ use App\Models\Product;
 // Route::get('/', [AppController::class,"mainPage"])->name("app.main");
 
 Route::middleware("locale")->group(function (){
-    Route::get('/', [ArticleController::class,"main"])->name("app.main");
+    Route::get('/', [AppController::class, "mainPage"])->name("app.main");
     Route::get('lang/{lang}', [AppController::class, "changeLocale"])->name("app.change-lang");
 
-Route::middleware(['auth'])->group(function(){
-
-    Route::middleware(['is_admin'])->group(function(){
+    Route::middleware(['auth'])->group(function(){
 
         Route::prefix('categories')->group(function () {
             Route::get('/', [CategoryController::class, 'categoriesList'])->name("categories.list");
@@ -67,21 +68,42 @@ Route::middleware(['auth'])->group(function(){
             Route::get('{productSlug}', [ProductController::class, 'show'])->name("products.show");
             
         });
+        Route::prefix('users')->middleware('role:super-admin|admin')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name("users.index");
+            Route::get('{user}/edit', [UserController::class, 'edit'])->name("users.edit");
+            Route::put('{user}/edit', [UserController::class, 'update'])->name("users.update");
+        });
+        
+        Route::prefix('roles')->middleware('role:super-admin')->group(function () {
+            Route::get('/', [RoleController::class, 'index'])->name("roles.index");
+            Route::get('create', [RoleController::class, 'create'])->name("roles.create");
+            Route::post('create', [RoleController::class, 'store'])->name("roles.store");
+            Route::get('{role}/edit', [RoleController::class, 'edit'])->name("roles.edit");
+            Route::put('{role}/edit', [RoleController::class, 'update'])->name("roles.update");
+        });
+
+        Route::prefix('permissions')->middleware('role:super-admin')->group(function () {
+            Route::get('/', [PermissionController::class, 'index'])->name("permissions.index");
+            Route::get('create', [PermissionController::class, 'create'])->name("permissions.create");
+            Route::post('create', [PermissionController::class, 'store'])->name("permissions.store");
+        });
+
+        Route::post('logout', [AuthController::class, 'logout'])->name("auth.logout");
 
     });
 
-    Route::post('logout', [AuthController::class, 'logout'])->name("auth.logout");
+    Route::middleware(['guest'])->group(function ()
+        {
+            Route::get('register', [AuthController::class, 'registerPage'])->name("auth.register");
+            Route::post('register', [AuthController::class, 'storeUser'])->name("auth.store-user");
+            Route::get('login', [AuthController::class, 'loginPage'])->name("auth.login-page");
+            Route::post('login', [AuthController::class, 'login'])->name("auth.login");
+            
+        });    
     
 });
 
-Route::middleware(['guest'])->group(function ()
-{
-    Route::get('register', [AuthController::class, 'registerPage'])->name("auth.register");
-    Route::post('register', [AuthController::class, 'storeUser'])->name("auth.store-user");
-    Route::get('login', [AuthController::class, 'loginPage'])->name("auth.login-page");
-    Route::post('login', [AuthController::class, 'login'])->name("auth.login");
-    
-});
-});
+
+
 
 
