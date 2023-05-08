@@ -8,9 +8,11 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">{{ __("app.menu.home")}}</a>
+                <a class="nav-link" aria-current="page" href="{{ route('app.main') }}">{{ __("app.menu.home")}}</a>
               </li>
-             
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="">{{ __("News")}}</a>
+              </li>
 
               <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -33,6 +35,15 @@
 
             </ul>
             <ul class="navbar-nav d-flex align-items-center justify-content-end" style="margin-right:0">
+
+            <li class="nav-item text-light mx-3">
+              @if($currentUser->cart)
+              <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина ({{ $currentUser->cart->items->count() }})</a>
+              @else
+              <span class="header-cart">Корзина</span>
+              @endif
+            </li>
+
             @unlessrole('user')
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

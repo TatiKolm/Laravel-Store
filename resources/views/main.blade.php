@@ -12,8 +12,9 @@
                 <img src="{{ $product->getImage() }}" alt="" style="height:200px" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ $product->title }}</h5>
-                    <p class="card-text">5 000 руб</p>
-                    <a href="#" class="btn btn-primary">Перейти</a>
+                    <p class="card-text">{{ $product->getPrice() }}</p>
+                    <a href="{{route('app.product', $product->slug)}}" class="btn btn-sm btn-primary">Перейти</a>
+                    <a href="{{route('cart.add-product', $product)}}" class="btn btn-sm btn-success add-to-cart">В корзину</a>
                 </div>
             </div>    
         </div>

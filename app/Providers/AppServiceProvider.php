@@ -23,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.header', function($view){
             $view->with([
-                'trademarks' => Trademark::all()->sortBy('name')
+                'trademarks' => Trademark::all()->sortBy('name'),
+                'currentUser' => auth()->user()
             ]);
         });
     }

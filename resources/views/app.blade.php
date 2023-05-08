@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectronicStore - @yield('title')</title>
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
+    <style>
+        .sticky-message{
+            position: fixed;
+            top: 100px;
+            right: 30px;
+        }
+    </style>
 </head>
 <body>
     @include("layouts.header")
@@ -16,7 +23,10 @@
         </div>
     </main>
 
+    <div class="sticky-message"></div>
 
+<script src="{{asset('assets/js/jquery-3.6.4.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap.bundle.js')}}"></script>
+<script src="{{asset('assets/js/script.js')}}"></script>
 </body>
 </html>

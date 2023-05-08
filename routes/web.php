@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -32,6 +33,13 @@ use App\Http\Controllers\RoleController;
 Route::middleware("locale")->group(function (){
     Route::get('/', [AppController::class, "mainPage"])->name("app.main");
     Route::get('lang/{lang}', [AppController::class, "changeLocale"])->name("app.change-lang");
+    Route::get('articles', [AppController::class, "newsPage"])->name("news");
+    Route::get('products/{productSlug}', [AppController::class, 'showProduct'])->name('app.product');
+
+    Route::get('add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add-product');
+    Route::get('cart', [CartController::class, 'cartPage'])->name('cart');
+    Route::put('cart/items/{item}/edit', [CartController::class, 'changeQty'])->name('cart.item.qty-update');
+    Route::delete('cart/items/{item}', [CartController::class, 'destroy'])->name('cart.item.destroy');
 
     Route::middleware(['auth'])->group(function(){
 
@@ -65,7 +73,7 @@ Route::middleware("locale")->group(function (){
             Route::get('{product}/edit', [ProductController::class, 'edit'])->name("products.edit");
             Route::put('{product}/edit', [ProductController::class, 'update'])->name("products.update");
             Route::delete('{product}', [ProductController::class, 'destroy'])->name("products.destroy");
-            Route::get('{productSlug}', [ProductController::class, 'show'])->name("products.show");
+            // Route::get('{productSlug}', [ProductController::class, 'show'])->name("products.show");
             
         });
         Route::prefix('users')->middleware('role:super-admin|admin')->group(function () {
@@ -103,7 +111,7 @@ Route::middleware("locale")->group(function (){
     
 });
 
-
+Route::get('super-admin/test', [AppController::class, 'addPrice']);
 
 
 
