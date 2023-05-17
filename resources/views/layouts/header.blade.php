@@ -37,10 +37,12 @@
             <ul class="navbar-nav d-flex align-items-center justify-content-end" style="margin-right:0">
 
             <li class="nav-item text-light mx-3">
-              @if($currentUser->cart)
-              <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина ({{ $currentUser->cart->items->count() }})</a>
-              @else
-              <span class="header-cart">Корзина</span>
+              @if($currentUser)
+                @if($currentUser->cart)
+                <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина ({{ $currentUser->cart->items->count() }})</a>
+                @else
+                <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина</a>
+                @endif
               @endif
             </li>
 
@@ -99,6 +101,11 @@
                     </a>
                   </li>
                   @endhasrole
+                  <li>
+                    <a class="dropdown-item" href="{{route('admin.orders')}}">
+                    Заказы
+                    </a>
+                  </li>
                 </ul>
               </li>
               @endunlessrole

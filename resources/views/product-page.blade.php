@@ -17,7 +17,7 @@
         <div class="mb-3">{!!$product->getTrademarks()!!}</div>
         <div class="mb-3">{{$product->getPrice()}}</div>
         <div class="mb-3">
-            <a href="{{route('cart.add-product', $product)}}" type="button" class="btn btn-success">В корзину</a>
+            <a href="{{route('cart.add-product', $product)}}" type="button" class="btn btn-success add-to-cart">В корзину</a>
         </div>
         @if(session('success'))
             <div class="alert alert-success">

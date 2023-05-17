@@ -27,6 +27,7 @@
 
 <script src="{{asset('assets/js/jquery-3.6.4.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap.bundle.js')}}"></script>
+@yield('page-scripts')
 <script src="{{asset('assets/js/script.js')}}"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +95,12 @@ Route::middleware("locale")->group(function (){
             Route::get('create', [PermissionController::class, 'create'])->name("permissions.create");
             Route::post('create', [PermissionController::class, 'store'])->name("permissions.store");
         });
+
+        Route::get('checkout', [OrderController::class, 'checkoutPage'])->name('app.checkout');
+        Route::post('checkout', [OrderController::class, 'storeOrder'])->name('app.store-order');
+        Route::get('order/{order}/thankyou', [OrderController::class, 'thankyouPage'])->name('app.order-thankyou');
+
+        Route::get('orders', [OrderController::class, 'orders'])->name('admin.orders');
 
         Route::post('logout', [AuthController::class, 'logout'])->name("auth.logout");
 

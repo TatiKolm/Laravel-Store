@@ -20,3 +20,5 @@ $btn.on("click", function (e) {
 $(".change-qty").on("change", function () {
     $(this).closest("form").submit();
 });
+
+$("#phone").inputmask({ mask: "+7 (999) 999-99-99" });

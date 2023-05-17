@@ -4,7 +4,7 @@
 
 @section("content")
     <h1 class="my-5">{{__("Корзина")}}</h1>
-    
+    @if($cart)
     <div class="row">
        <div class="col-lg-8 col-12">
         <table class="table table-striped">
@@ -27,7 +27,7 @@
                     <td>
                         <form action="{{ route('cart.item.qty-update', $item)}}" method="POST">
                             @csrf @method("PUT")
-                            <input type="number" class="form-control change-qty" name="quantity" value="{{$item->quantity}}">
+                            <input type="number" class="form-control change-qty" name="quantity" value="{{$item->quantity}}" min="1">
                         </form>
                     </td>
                     <td>{{$item->sub_total}}</td>
@@ -45,8 +45,19 @@
         
        </div>
        <div class="col-lg-4 col-12">
-        
+        <div>
+            <h3 class="mb-2">Итого</h3>
+            <p class="mb-2">Сумма заказа</p>
+            <!-- <h4 class="mb-2">{{$cart->getTotalPriceHTML()}}</h4> -->
+            <h4 class="mb-2">{{priceFormat($cart->getTotalPrice())}}</h4>
+            <a href="{{route('app.checkout')}}" class="btn btn-primary">Оформить заказ</a>
+        </div>
         </div>              
     </div>
-    
+    @else
+    <div>
+        <p>Ваша корзина пуста</p>
+        <a href="/" class="btn btn-success">Вернуться на главную</a>
+    </div>
+    @endif
 @endsection
