@@ -11,7 +11,7 @@
                 <a class="nav-link" aria-current="page" href="{{ route('app.main') }}">{{ __("app.menu.home")}}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="">{{ __("News")}}</a>
+                <a class="nav-link" aria-current="page" href="{{ route('app.news') }}">{{ __("News")}}</a>
               </li>
 
               <li class="nav-item dropdown">
@@ -28,7 +28,12 @@
                                 </li>
                             @endforeach
                         </ul>
-                    </li>
+              </li>
+              <li>
+                    <a class="nav-link" href="{{route('admin.orders')}}">
+                    Заказы
+                    </a>
+              </li>
                 
                 </ul>
               </li>
@@ -101,11 +106,13 @@
                     </a>
                   </li>
                   @endhasrole
+                  @hasrole('super-admin')
                   <li>
-                    <a class="dropdown-item" href="{{route('admin.orders')}}">
-                    Заказы
+                    <a class="dropdown-item" href="{{route('orders.index')}}">
+                    {{ __("Управление заказами ")}}
                     </a>
                   </li>
+                  @endhasrole
                 </ul>
               </li>
               @endunlessrole

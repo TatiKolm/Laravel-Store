@@ -21,4 +21,15 @@ $(".change-qty").on("change", function () {
     $(this).closest("form").submit();
 });
 
-$("#phone").inputmask({ mask: "+7 (999) 999-99-99" });
+let $phone = $("#phone");
+if ($phone.lenght > 0) {
+    $("#phone").inputmask({ mask: "+7 (999) 999-99-99" });
+}
+
+$(".change-status").on("change", function () {
+    let select = $(this);
+    $.ajax({
+        url: select.closest("form").attr("action") + "?status=" + select.val(),
+        method: "GET",
+    });
+});

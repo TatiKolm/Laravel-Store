@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderSuccess;
+use App\Mail\OrderSuccessToAdmin;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class OrderController extends Controller
@@ -21,8 +24,10 @@ class OrderController extends Controller
             'user_surname' => 'required'
         ]);
 
+        $cart = auth()->user()->cart;
+
         try{
-            $cart = auth()->user()->cart;
+            
             $order = Order::add($request->all());
 
             foreach($cart->items as $item){
@@ -31,7 +36,12 @@ class OrderController extends Controller
 
             $order->total_sum = $cart->getTotalPrice();
             $order->save();
-            $cart->delete();
+
+            $cart->delete(); 
+
+            Mail::to($order->email)->send(new OrderSuccess($order));
+            Mail::to('laravel-project-seo@yandex.ru')->send(new OrderSuccessToAdmin($order));
+
         } catch (Throwable $e){
             report($e);
             return false;

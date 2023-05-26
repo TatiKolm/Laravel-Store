@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisterSuccessMail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -23,11 +25,14 @@ class AuthController extends Controller
             'password_confirmation' => 'same:password'
         ]);
 
-        User::create([
+        $user = User::create([
             'name'=>$request->name,
             'email' => $request->email,
             'password' => Hash::make($request-> password),
         ]);
+
+        Mail::to($user->email)->send(new RegisterSuccessMail($user));
+
         return redirect()->route('auth.login-page')->with("success_register", "Вы успешно зарегестрировались! Войдите в аккаунт");
     }
 

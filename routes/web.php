@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\CategoryController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +35,8 @@ use App\Http\Controllers\OrderController;
 Route::middleware("locale")->group(function (){
     Route::get('/', [AppController::class, "mainPage"])->name("app.main");
     Route::get('lang/{lang}', [AppController::class, "changeLocale"])->name("app.change-lang");
-    Route::get('articles', [AppController::class, "newsPage"])->name("news");
-    Route::get('products/{productSlug}', [AppController::class, 'showProduct'])->name('app.product');
+    Route::get('news', [AppController::class, "newsPage"])->name("app.news");
+    Route::get('product/{productSlug}', [AppController::class, 'showProduct'])->name('app.product');
 
     Route::get('add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add-product');
     Route::get('cart', [CartController::class, 'cartPage'])->name('cart');
@@ -73,7 +75,7 @@ Route::middleware("locale")->group(function (){
             Route::get('{product}/edit', [ProductController::class, 'edit'])->name("products.edit");
             Route::put('{product}/edit', [ProductController::class, 'update'])->name("products.update");
             Route::delete('{product}', [ProductController::class, 'destroy'])->name("products.destroy");
-            // Route::get('{productSlug}', [ProductController::class, 'show'])->name("products.show");
+            Route::get('{productSlug}', [ProductController::class, 'show'])->name("products.show");
             
         });
         Route::prefix('users')->middleware('role:super-admin|admin')->group(function () {
@@ -101,6 +103,12 @@ Route::middleware("locale")->group(function (){
         Route::get('order/{order}/thankyou', [OrderController::class, 'thankyouPage'])->name('app.order-thankyou');
 
         Route::get('orders', [OrderController::class, 'orders'])->name('admin.orders');
+
+        Route::prefix('admin')->group(function (){
+            Route::resource('orders', AdminOrderController::class);
+
+            Route::get("change-order-status/{order}", [AdminOrderController::class, "changeStatus"])->name('order.change-status');
+        });
 
         Route::post('logout', [AuthController::class, 'logout'])->name("auth.logout");
 
