@@ -22,7 +22,7 @@
                         <ul class="dropdown-menu">
                             @foreach ($trademarks as $trademark)
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('app.catalog-by-trademark', $trademark->slug) }}">
                                         {{ $trademark->name }}
                                     </a>
                                 </li>
@@ -44,7 +44,7 @@
             <li class="nav-item text-light mx-3">
               @if($currentUser)
                 @if($currentUser->cart)
-                <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина ({{ $currentUser->cart->items->count() }})</a>
+                <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина ({{ $currentUser->cart->getTotalItems() }})</a>
                 @else
                 <a href="{{route('cart')}}" class="header-cart" style="color: white;">Корзина</a>
                 @endif

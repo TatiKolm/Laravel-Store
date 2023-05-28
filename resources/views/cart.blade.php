@@ -42,13 +42,33 @@
               
             </tbody>
         </table>
-        
+
+        @if(\Session::has('message'))
+            <div class="alert alert-warning">
+                {!!\Session::get('message')!!}
+            </div>
+        @endif
+
+        @if($cart->promocodes->first())
+            @if($cart->promocodes->contains($cart->promocodes->first()->id))
+                <p>Промкод применен <a href="{{ route('cart.cancel-promocode')}}">Отменить</a></p>
+            @endIf
+            @else
+                <form action="{{ route('cart.apply-promocode')}}" method="POST">
+                    @csrf
+                    <div class="form-group mb-3">
+                        <label for="">Введите промокод</label>
+                        <input type="text" class="form-control" name="promocode">
+                    </div>
+                    <button class="btn btn-warning">Применить</button>
+                </form>
+           
+        @endIf
        </div>
        <div class="col-lg-4 col-12">
         <div>
             <h3 class="mb-2">Итого</h3>
             <p class="mb-2">Сумма заказа</p>
-            <!-- <h4 class="mb-2">{{$cart->getTotalPriceHTML()}}</h4> -->
             <h4 class="mb-2">{{priceFormat($cart->getTotalPrice())}}</h4>
             <a href="{{route('app.checkout')}}" class="btn btn-primary">Оформить заказ</a>
         </div>

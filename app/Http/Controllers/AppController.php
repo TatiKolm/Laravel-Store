@@ -11,8 +11,14 @@ class AppController extends Controller
 {
     public function mainPage()
     {
+        $products = Product::all();
+
+        if(isset($_GET['search'])){
+            $products = Product::where("title", "like", "%".$_GET['search']."%")->get();
+        }
+
         return view("main", [
-            'products' => Product::paginate(8)
+            'products' => $products,
         ]);
     }
 
@@ -44,6 +50,14 @@ class AppController extends Controller
     {
         return view('news', [
             'articles' => Article::all()
+        ]);
+    }
+
+    public function getProductBYTrademark($trademarkSlug)
+    {
+        $trademark = Trademark::where("slug", $trademarkSlug)->first();
+        return view('catalog', [
+            'products' => $trademark->products, 
         ]);
     }
 }

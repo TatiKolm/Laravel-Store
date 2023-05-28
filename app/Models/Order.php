@@ -36,6 +36,10 @@ class Order extends Model
 
         return $order;
     }
+    public function promocodes()
+    {
+        return $this->belongsToMany(Promocode::class);
+    }
 
     public function getCustomerFullName()
     {

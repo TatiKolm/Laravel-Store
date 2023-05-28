@@ -43,6 +43,13 @@ Route::middleware("locale")->group(function (){
     Route::put('cart/items/{item}/edit', [CartController::class, 'changeQty'])->name('cart.item.qty-update');
     Route::delete('cart/items/{item}', [CartController::class, 'destroy'])->name('cart.item.destroy');
 
+    Route::get('catalog/trademarks/{trademarkSlug}', [AppController::class, 'getProductBYTrademark'])->name('app.catalog-by-trademark');
+
+    Route::post('cart/set-promocode', [CartController::class, 'applyPromocode'])->name('cart.apply-promocode');
+    Route::get('cart/unset-promocode', [CartController::class, 'cancelPromocode'])->name('cart.cancel-promocode');
+
+
+
     Route::middleware(['auth'])->group(function(){
 
         Route::prefix('categories')->group(function () {

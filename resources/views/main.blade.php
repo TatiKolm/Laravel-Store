@@ -4,6 +4,15 @@
 
 @section("content")
     <h1 class="my-5">{{__("Products")}}</h1>
+
+    <form action="" method="GET" class="mb-5">
+        <div class="form-group ">
+            <input type="text" name="search" placeholder="Введите запрос" class="form-control mb-2">
+            <button class="btn btn-primary">Найти</button>
+        </div>
+        <a href="/">Сбросить фильтр</a> 
+    </form>
+   
     
     <div class="row">
         @foreach ($products as $product)
@@ -21,18 +30,6 @@
         @endforeach
     </div>
 
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group me-2" role="group" aria-label="First group">
-            @if($products->currentPage() != 1)
-            <a href="{{ $products->previousPageUrl() }}" type="button" class="btn btn-primary "><</a>
-            @endif
-            @for($i=1; $i<=$products->lastPage(); $i++)
-            <a href="{{ $products->url($i) }}"type="button" class="btn @if($i==$products->currentPage()) btn-primary @else btn-outline-primary @endif">{{$i}}</a>
-            @endfor
-            @if($products->currentPage() != $products->lastPage())
-            <a href="{{ $products->nextPageUrl() }}" type="button" class="btn btn-primary">></a>
-            @endif
-        </div>
-    </div>
+    
     
 @endsection
