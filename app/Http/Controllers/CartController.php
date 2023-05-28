@@ -31,15 +31,17 @@ class CartController extends Controller
                 'cart_id'=> $cart->id,
                 'product_id'=> $product -> id,
                 'price' => $product -> price,
+                'sub_total' => $product -> price,
             ]);
         } else {
             $cartItem-> update([
                 'quantity' => $cartItem -> quantity +1
             ]);
+            $cartItem->setSubTotal();
         }
         
 
-        $cartItem->setSubTotal();
+        
         $cart->setTotalPrice();
 
 
@@ -71,7 +73,14 @@ class CartController extends Controller
     {
         $cart = $item->cart;
         $item->delete();
-        $cart->setTotalPrice();
+
+        if(!$cart->items->count()){
+            $cart->delete();
+        } else{
+            $cart->setTotalPrice();
+        }
+
+       
         return back();
     }
 
